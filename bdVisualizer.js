@@ -28,7 +28,7 @@ function genPieAll(json) {
         if(k == 0){
             return ( a.ingr == b.ingr ) ? 0 : ( ( b.ingr > a.ingr ) ? 1 : -1 );
         }
-        return parseInt(b["qtd"]) - parseInt(a["qtd"]);
+        return k;
     });
     var total = narr.reduce(function (t, newQ) { return t + newQ.qtd;}, 0);
     for (var i = 0; i < narr.length; i++) {
@@ -53,21 +53,78 @@ function genPieAll(json) {
       type: 'pie'
     }];
 
+    var j = $("#genChart").width();
     var layout = {
-      height: 700,
-      width: 700,
+      height: $("#genChart").width() - 10,
+      width: $("#genChart").width() - 10,
       title: "Ranking geral - Palavras-chave"
     };
-
-    var ret = {"data" : data, "layout" :layout};
-
-    return ret;
+    //window.alert("WIDTHHHHHHHHH = "+j);
+    return {"data" : data, "layout" :layout};
 }
 
+function genPieIngr(json) {
+    var arr = new Array();
+    var trashFood = ["arroz", "feijão", "integral", "pvt", "opção:", "refresco"];
+    trashFood = trashFood.map(i => new RegExp('\\b'+i+'\\b'));
+
+    var globalGambiarra = 0;
+    jQuery.each(json["ingrediente"], function(i, val) {
+        if(typeof val != 'undefined')
+            if(notStaleFood(val["tipo"], trashFood))
+                arr[globalGambiarra++] = {"qtd": parseInt(val["qtd"]), "tipo": val["tipo"]};
+    });
+
+    var total = arr.reduce(function (t, newQ) { return t + newQ.qtd;}, 0);
+    for (var i = 0; i < arr.length; i++) {
+        arr[i].qtd /= parseFloat(total);
+    }
+    arr.sort(function(a, b) {
+        var k = b.qtd - a.qtd;
+        if(k == 0)
+            return ( a.tipo == b.tipo ) ? 0 : ( ( b.tipo > a.tipo ) ? 1 : -1 );
+        return k;
+    });
+
+    var i = 0;
+    for (total = 0; i < arr.length && total < 0.6; i++) {
+        total += arr[i].qtd;
+        if(arr[i].qtd < 0.015)
+            break;
+    }
+    arr = arr.slice(0, i + 1);
+    var data = [{
+      values: arr.map(i => i.qtd).concat([1 - total]),
+      labels: arr.map(i => i.tipo).concat("Outros"),
+      type: 'pie'
+    }];
+
+    var j = $("#ingrChart").width();
+    var layout = {
+      height: $("#ingrChart").width() - 10,
+      width: $("#ingrChart").width() - 10,
+      title: "Ranking geral - Porções"
+    };
+    return {"data" : data, "layout" :layout};
+}
 
 $.getJSON("cardapio.json", function(json) {
+    // Plot general keyword chart
     genChart = genPieAll(json);
-    Plotly.newPlot('topinho', genChart.data, genChart.layout, {displayModeBar: false});
+    Plotly.newPlot('kwChart', genChart.data, genChart.layout, {displayModeBar: false});
+    $('#kwChart').css({'margin' : '0 auto'});
+    Plotly.Plots.resize(document.getElementById("kwChart"));
+
+    // Plot ingredient chart
+    ingrChart = genPieIngr(json);
+    Plotly.newPlot('ingrChart', ingrChart.data, ingrChart.layout, {displayModeBar: false});
+    $('#ingrChart').css({'margin' : '0 auto'});
+    Plotly.Plots.resize(document.getElementById("ingrChart"));
+
+
+
+
+
 });
 
 
@@ -82,4 +139,14 @@ function isSorted(arr) {
         }
     }
     return sorted;
+}
+
+function notStaleFood(food, trashFoods) {
+    var notStale = true;
+    for (reg of trashFoods)
+        if(reg.test(food)) {
+            notStale = false;
+            break;
+        }
+    return notStale;
 }

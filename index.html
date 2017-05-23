@@ -1,130 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <style>
-  /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-  .row.content {height: 550px}
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 550px}
 
-  /* Set gray background color and 100% height */
-  .sidenav {
-    background-color: #f1f1f1;
-    height: 100%;
-  }
+    /* Set gray background color and 100% height */
+    .sidenav {
+        background-color: #f1f1f1;
+        height: 100%;
+    }
 
-  /* On small screens, set height to 'auto' for the grid */
-  @media screen and (max-width: 767px) {
-    .row.content {height: auto;}
-  }
-  </style>
+    /* On small screens, set height to 'auto' for the grid */
+    @media screen and (max-width: 767px) {
+        .row.content {height: auto;}
+    }
+    </style>
 </head>
 <body>
 
-  <nav class="navbar navbar-inverse visible-xs">
+    <nav class="navbar navbar-inverse visible-xs">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Dashboard</a></li>
+                    <li><a href="#">Age</a></li>
+                    <li><a href="#">Gender</a></li>
+                    <li><a href="#">Geo</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      </div>
-      <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Dashboard</a></li>
-          <li><a href="#">Age</a></li>
-          <li><a href="#">Gender</a></li>
-          <li><a href="#">Geo</a></li>
-        </ul>
-      </div>
+        <div class="row content">
+            <div class="col-sm-2 sidenav hidden-xs">
+                <img src="logo.png" class="img-responsive center-block" style="padding-top : 5px" alt=""><br>
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="#section1">Visão geral</a></li>
+                    <li><a href="#section2">Química</a></li>
+                    <li><a href="#section3">Física / Central</a></li>
+                    <li><a href="#section3">Prefeitura</a></li>
+                </ul><br>
+            </div>
+            <br>
+
+            <div class="col-sm-10">
+                <div class="well">
+                    <h4>Visão Geral</h4>
+                    <p>
+                        Intelligentsia quinoa umami hot chicken, PBR&B chia iceland tousled flannel. Lyft hoodie cray deep v. Freegan iceland cliche, kinfolk vape godard scenester single-origin coffee try-hard artisan street art mustache +1. Tote bag umami drinking vinegar normcore, kombucha DIY fingerstache PBR&B mumblecore gochujang church-key disrupt. Hell of kitsch retro prism deep v ugh, tousled pok pok mumblecore. Raclette succulents ugh lo-fi. Raw denim ugh knausgaard, kombucha fixie jianbing beard letterpress quinoa truffaut godard blog retro mustache.
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="well well-lg">
+                            <div id="kwChart"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="well">
+                            <div id="ingrChart"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="well">
+                            <p>Text</p>
+                            <p>Text</p>
+                            <p>Text</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="well">
+                            <p>Text</p>
+                            <p>Text</p>
+                            <p>Text</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="well">
+                            <p>Text</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="well">
+                            <p>Text</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </nav>
-
-  <div class="container-fluid">
-      <div id="topinho">
-
-      </div>
-    <div class="row content">
-      <div class="col-sm-3 sidenav hidden-xs">
-        <img src="logo.png" class="img-responsive center-block" style="padding-top : 5px" alt=""><br>
-        <ul class="nav nav-pills nav-stacked">
-          <li class="active"><a href="#section1">Visão geral</a></li>
-          <li><a href="#section2">Química</a></li>
-          <li><a href="#section3">Física / Central</a></li>
-          <li><a href="#section3">Prefeitura</a></li>
-        </ul><br>
-      </div>
-      <br>
-
-      <div class="col-sm-9">
-        <div class="well">
-          <h4>Dashboard</h4>
-          <p>Some text..</p>
-        </div>
-        <div class="row">
-          <div class="col-sm-3">
-            <div class="well">
-              <h4>Users</h4>
-              <p>1 Million</p>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="well">
-              <h4>Pages</h4>
-              <p>100 Million</p>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="well">
-              <h4>Sessions</h4>
-              <p>10 Million</p>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="well">
-              <h4>Bounce</h4>
-              <p>30%</p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-4">
-          </div>
-          <div class="col-sm-4">
-            <div class="well">
-              <p>Text</p>
-              <p>Text</p>
-              <p>Text</p>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="well">
-              <p>Text</p>
-              <p>Text</p>
-              <p>Text</p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-8">
-            <div class="well">
-              <p>Text</p>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="well">
-              <p>Text</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
 </body>
 <script src="plotly-latest.min.js"></script>
