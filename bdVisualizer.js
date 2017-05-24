@@ -53,13 +53,12 @@ function genPieAll(json) {
       type: 'pie'
     }];
 
-    var j = $("#genChart").width();
+    var j = $("#kwChart").width();
     var layout = {
-      height: $("#genChart").width() - 10,
-      width: $("#genChart").width() - 10,
+      height: $("#kwChart").width() - 10,
+      width: $("#kwChart").width() - 10,
       title: "Ranking geral - Palavras-chave"
     };
-    //window.alert("WIDTHHHHHHHHH = "+j);
     return {"data" : data, "layout" :layout};
 }
 
@@ -68,11 +67,11 @@ function genPieIngr(json) {
     var trashFood = ["arroz", "feijão", "integral", "pvt", "opção:", "refresco"];
     trashFood = trashFood.map(i => new RegExp('\\b'+i+'\\b'));
 
-    var globalGambiarra = 0;
+    var glob = 0;
     jQuery.each(json["ingrediente"], function(i, val) {
         if(typeof val != 'undefined')
             if(notStaleFood(val["tipo"], trashFood))
-                arr[globalGambiarra++] = {"qtd": parseInt(val["qtd"]), "tipo": val["tipo"]};
+                arr[glob++] = {"qtd": parseInt(val["qtd"]), "tipo": val["tipo"]};
     });
 
     var total = arr.reduce(function (t, newQ) { return t + newQ.qtd;}, 0);
@@ -109,6 +108,10 @@ function genPieIngr(json) {
 }
 
 $.getJSON("cardapio.json", function(json) {
+    // Add the correct date
+    $("#titleDashboard").text($("#titleDashboard").text()+
+    getDate(json)+" (última atualização)");
+
     // Plot general keyword chart
     genChart = genPieAll(json);
     Plotly.newPlot('kwChart', genChart.data, genChart.layout, {displayModeBar: false});
@@ -120,11 +123,6 @@ $.getJSON("cardapio.json", function(json) {
     Plotly.newPlot('ingrChart', ingrChart.data, ingrChart.layout, {displayModeBar: false});
     $('#ingrChart').css({'margin' : '0 auto'});
     Plotly.Plots.resize(document.getElementById("ingrChart"));
-
-
-
-
-
 });
 
 
@@ -141,6 +139,9 @@ function isSorted(arr) {
     return sorted;
 }
 
+/* receive a food and if the 'food' match one of trashFoods(RegExp list)
+ * items, returns false, else returns true;
+ */
 function notStaleFood(food, trashFoods) {
     var notStale = true;
     for (reg of trashFoods)
@@ -149,4 +150,12 @@ function notStaleFood(food, trashFoods) {
             break;
         }
     return notStale;
+}
+
+// Get the date of the last registered item
+function getDate(json) {
+    var st = json["central"];
+    var i = 0;
+    for (var k in st) i++;
+    return st[i]["data"];
 }
